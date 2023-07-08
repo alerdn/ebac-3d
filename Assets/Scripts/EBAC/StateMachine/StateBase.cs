@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StateBase : MonoBehaviour
+public class StateBase
 {
     public virtual void OnStateEnter()
     {

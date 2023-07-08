@@ -1,46 +1,33 @@
-using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
-using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+
+public class StateMachine<T> where T : System.Enum
 {
-    public enum States
-    {
-        NONE
-    }
+    public StateBase CurrentState => _currentState;
+    public Dictionary<T, StateBase> DictonaryState => _dictionaryState;
 
-    public Dictionary<States, StateBase> DictionaryState;
-
-    [SerializeField] private float _timeToStartGame = 1f;
-
+    private Dictionary<T, StateBase> _dictionaryState;
     private StateBase _currentState;
 
-    private void Awake()
+    public StateMachine()
     {
-        DictionaryState = new Dictionary<States, StateBase>();
-        DictionaryState.Add(States.NONE, new StateBase());
-
-        SwitchState(States.NONE);
-
-        Invoke(nameof(StartGame), _timeToStartGame);
+        _dictionaryState = new Dictionary<T, StateBase>();
     }
 
-    [Button]
-    private void StartGame()
+    public void RegisterStates(T typeEnum, StateBase state)
     {
-        SwitchState(States.NONE);
+        _dictionaryState.Add(typeEnum, state);
     }
 
-    private void SwitchState(States state)
+    private void SwitchState(T state)
     {
         if (_currentState != null) _currentState.OnStateExit();
 
-        _currentState = DictionaryState[state];
+        _currentState = _dictionaryState[state];
         _currentState.OnStateEnter();
     }
 
-    private void Update()
+    public void Update()
     {
         if (_currentState != null) _currentState.OnStateStay();
     }
