@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-
 public class StateMachine<T> where T : System.Enum
 {
     public StateBase CurrentState => _currentState;
@@ -9,17 +8,29 @@ public class StateMachine<T> where T : System.Enum
     private Dictionary<T, StateBase> _dictionaryState;
     private StateBase _currentState;
 
+    #region Constructors
+
     public StateMachine()
     {
         _dictionaryState = new Dictionary<T, StateBase>();
     }
 
-    public void RegisterStates(T typeEnum, StateBase state)
+    public StateMachine(T state)
+    {
+        _dictionaryState = new Dictionary<T, StateBase>();
+        SwitchState(state);
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public void RegisterState(T typeEnum, StateBase state)
     {
         _dictionaryState.Add(typeEnum, state);
     }
 
-    private void SwitchState(T state)
+    public void SwitchState(T state)
     {
         if (_currentState != null) _currentState.OnStateExit();
 
@@ -31,4 +42,6 @@ public class StateMachine<T> where T : System.Enum
     {
         if (_currentState != null) _currentState.OnStateStay();
     }
+
+    #endregion
 }

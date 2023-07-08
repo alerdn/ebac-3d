@@ -11,12 +11,14 @@ public class FSMExample : MonoBehaviour
         STATE_THREE
     }
 
-    public StateMachine<ExampleEnum> stateMachine;
+    public StateMachine<ExampleEnum> StateMachine { get; private set; }
 
-    private void Start() {
-        stateMachine = new StateMachine<ExampleEnum>();
-        stateMachine.RegisterStates(ExampleEnum.STATE_ONE, new StateBase());
-        stateMachine.RegisterStates(ExampleEnum.STATE_TWO, new StateBase());
-        stateMachine.RegisterStates(ExampleEnum.STATE_THREE, new StateBase());
+
+    private void Start()
+    {
+        StateMachine = new StateMachine<ExampleEnum>();
+        StateMachine.RegisterState(ExampleEnum.STATE_ONE, new StateBase());
+        StateMachine.RegisterState(ExampleEnum.STATE_TWO, new StateBase());
+        StateMachine.RegisterState(ExampleEnum.STATE_THREE, new StateBase());
     }
 }
