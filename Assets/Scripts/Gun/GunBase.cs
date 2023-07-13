@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunBase : MonoBehaviour
 {
+    public UIGunUpdater UiUpdater;
+
     [SerializeField] protected ProjectileBase _prefabProjectileBase;
     [SerializeField] protected Transform _positionToShoot;
     [SerializeField] protected float _timeBetweenShoot = .3f;
