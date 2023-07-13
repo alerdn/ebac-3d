@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Animator _animator;
     [SerializeField] private float _moveSpeed = 25f;
-    [SerializeField] private float _turnSpeed = 300f;
     [SerializeField] private float _jumpSpeed = 15f;
     [SerializeField] private float _gravity = -9.8f;
 
@@ -24,6 +23,7 @@ public class Player : MonoBehaviour
 
     private CharacterController _charController;
     private float _verticalSpeed;
+    private float _turnSmoothVelocity;
 
     private void Start()
     {
@@ -33,22 +33,23 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(0f, Input.GetAxis("Horizontal") * _turnSpeed * Time.deltaTime, 0f);
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        float inputAxisVertical = Input.GetAxis("Vertical");
-        Vector3 speedVector = transform.forward * inputAxisVertical * _moveSpeed;
+        Vector3 speedVector = direction * _moveSpeed;
 
         if (_charController.isGrounded)
         {
             _verticalSpeed = 0;
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Jump"))
             {
                 _verticalSpeed = _jumpSpeed;
             }
         }
 
         _animator.speed = 1f;
-        bool isWalking = inputAxisVertical != 0;
+        bool isWalking = direction.magnitude >= .1f;
         if (isWalking)
         {
             if (Input.GetKey(_keyRun))
@@ -61,9 +62,16 @@ public class Player : MonoBehaviour
         _verticalSpeed -= _gravity * Time.deltaTime;
         speedVector.y = _verticalSpeed;
 
-        _charController.Move(speedVector * Time.deltaTime);
+        if (isWalking)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, .1f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        }
 
+        _charController.Move(speedVector * Time.deltaTime);
         _animator.SetBool("Run", isWalking);
+
     }
 
     private void StartStateMachine()
