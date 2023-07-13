@@ -27,9 +27,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""ChangeGun"",
                     ""type"": ""Button"",
-                    ""id"": ""b87eb7ad-c8db-422c-b359-9c3e6b0b0e4c"",
+                    ""id"": ""f20ff8a1-6f53-43ca-84cf-1203a005b9a7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -60,12 +60,23 @@ public class @Inputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ccab89b2-8058-4cc9-a5db-7497255536dd"",
-                    ""path"": ""<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button2"",
-                    ""interactions"": ""Press"",
+                    ""id"": ""cb195475-f9f4-469c-9f70-79c2e2036c28"",
+                    ""path"": ""<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button4"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump"",
+                    ""action"": ""ChangeGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2353b4c9-f7b3-424c-9b4d-43cfe6dadf50"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeGun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -77,7 +88,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
-        m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_ChangeGun = m_Gameplay.FindAction("ChangeGun", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -128,13 +139,13 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Shoot;
-    private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_ChangeGun;
     public struct GameplayActions
     {
         private @Inputs m_Wrapper;
         public GameplayActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
-        public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @ChangeGun => m_Wrapper.m_Gameplay_ChangeGun;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -147,9 +158,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
-                @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                @ChangeGun.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeGun;
+                @ChangeGun.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeGun;
+                @ChangeGun.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeGun;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -157,9 +168,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
+                @ChangeGun.started += instance.OnChangeGun;
+                @ChangeGun.performed += instance.OnChangeGun;
+                @ChangeGun.canceled += instance.OnChangeGun;
             }
         }
     }
@@ -167,6 +178,6 @@ public class @Inputs : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnShoot(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnChangeGun(InputAction.CallbackContext context);
     }
 }

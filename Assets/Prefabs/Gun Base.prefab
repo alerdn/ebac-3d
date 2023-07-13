@@ -41,12 +41,12 @@ GameObject:
   - component: {fileID: 5112531509834670877}
   - component: {fileID: 5112531509834670878}
   m_Layer: 0
-  m_Name: Gun
+  m_Name: Gun Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5112531509834670877
 Transform:
   m_ObjectHideFlags: 0

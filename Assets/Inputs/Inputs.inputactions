@@ -14,9 +14,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump",
+                    "name": "ChangeGun",
                     "type": "Button",
-                    "id": "b87eb7ad-c8db-422c-b359-9c3e6b0b0e4c",
+                    "id": "f20ff8a1-6f53-43ca-84cf-1203a005b9a7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -47,12 +47,23 @@
                 },
                 {
                     "name": "",
-                    "id": "ccab89b2-8058-4cc9-a5db-7497255536dd",
-                    "path": "<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button2",
-                    "interactions": "Press",
+                    "id": "cb195475-f9f4-469c-9f70-79c2e2036c28",
+                    "path": "<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button4",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "ChangeGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2353b4c9-f7b3-424c-9b4d-43cfe6dadf50",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
