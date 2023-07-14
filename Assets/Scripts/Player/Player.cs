@@ -18,16 +18,28 @@ public class Player : MonoBehaviour
     [SerializeField] private float _gravity = -9.8f;
 
     [Header("Run Setup")]
-    [SerializeField] private KeyCode _keyRun = KeyCode.LeftShift;
     [SerializeField] private float _runSpeedModifier = 1.5f;
 
     private CharacterController _charController;
     private float _verticalSpeed;
     private float _turnSmoothVelocity;
+    private Inputs _inputs;
+    private bool _canRun;
+
+    private void OnEnable()
+    {
+        if (_inputs != null) _inputs.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _inputs.Disable();
+    }
 
     private void Start()
     {
         _charController = GetComponent<CharacterController>();
+        StartInputs();
         StartStateMachine();
     }
 
@@ -52,7 +64,7 @@ public class Player : MonoBehaviour
         bool isWalking = direction.magnitude >= .1f;
         if (isWalking)
         {
-            if (Input.GetKey(_keyRun))
+            if (_canRun)
             {
                 speedVector *= _runSpeedModifier;
                 _animator.speed = _runSpeedModifier;
@@ -72,6 +84,14 @@ public class Player : MonoBehaviour
         _charController.Move(speedVector * Time.deltaTime);
         _animator.SetBool("Run", isWalking);
 
+    }
+
+    private void StartInputs()
+    {
+        _inputs = new Inputs();
+        _inputs.Enable();
+        _inputs.Gameplay.Run.performed += (ctx) => _canRun = true;
+        _inputs.Gameplay.Run.canceled += (ctx) => _canRun = false;
     }
 
     private void StartStateMachine()

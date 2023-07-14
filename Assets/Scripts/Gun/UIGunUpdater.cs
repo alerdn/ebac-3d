@@ -14,7 +14,7 @@ public class UIGunUpdater : MonoBehaviour
     private Image uiImage;
     private Tween _currentTween;
 
-    private void Start()
+    private void Awake()
     {
         uiImage = GetComponent<Image>();
     }

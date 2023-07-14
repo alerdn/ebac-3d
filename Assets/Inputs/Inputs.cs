@@ -49,6 +49,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""0974dc0a-24e7-4c5a-abf8-6bd251b8aa2b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -117,6 +125,28 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""SelectSecondaryGun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bfc88431-7dd4-4e7b-93ed-cde146267993"",
+                    ""path"": ""<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button6"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6194c25-3ba6-4511-becc-bd8076e3775e"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -129,6 +159,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Gameplay_ChangeGun = m_Gameplay.FindAction("ChangeGun", throwIfNotFound: true);
         m_Gameplay_SelectPrimaryGun = m_Gameplay.FindAction("SelectPrimaryGun", throwIfNotFound: true);
         m_Gameplay_SelectSecondaryGun = m_Gameplay.FindAction("SelectSecondaryGun", throwIfNotFound: true);
+        m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -182,6 +213,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_ChangeGun;
     private readonly InputAction m_Gameplay_SelectPrimaryGun;
     private readonly InputAction m_Gameplay_SelectSecondaryGun;
+    private readonly InputAction m_Gameplay_Run;
     public struct GameplayActions
     {
         private @Inputs m_Wrapper;
@@ -190,6 +222,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @ChangeGun => m_Wrapper.m_Gameplay_ChangeGun;
         public InputAction @SelectPrimaryGun => m_Wrapper.m_Gameplay_SelectPrimaryGun;
         public InputAction @SelectSecondaryGun => m_Wrapper.m_Gameplay_SelectSecondaryGun;
+        public InputAction @Run => m_Wrapper.m_Gameplay_Run;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -211,6 +244,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @SelectSecondaryGun.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectSecondaryGun;
                 @SelectSecondaryGun.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectSecondaryGun;
                 @SelectSecondaryGun.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSelectSecondaryGun;
+                @Run.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -227,6 +263,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @SelectSecondaryGun.started += instance.OnSelectSecondaryGun;
                 @SelectSecondaryGun.performed += instance.OnSelectSecondaryGun;
                 @SelectSecondaryGun.canceled += instance.OnSelectSecondaryGun;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
         }
     }
@@ -237,5 +276,6 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnChangeGun(InputAction.CallbackContext context);
         void OnSelectPrimaryGun(InputAction.CallbackContext context);
         void OnSelectSecondaryGun(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
 }
