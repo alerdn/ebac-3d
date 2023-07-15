@@ -23,7 +23,11 @@ public class ProjectileBase : MonoBehaviour
 
         if (damageable != null)
         {
-            damageable.Damage(_damageAmount);
+            Vector3 impactDirection = other.transform.position - transform.position;
+            impactDirection = -impactDirection.normalized;
+            impactDirection.y = 0f;
+
+            damageable.Damage(_damageAmount, impactDirection);
             Destroy(gameObject);
         }
     }

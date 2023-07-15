@@ -86,4 +86,10 @@ public class EnemyBase : MonoBehaviour, IDamageable
     {
         OnDamage(damage);
     }
+
+    public void Damage(float damage, Vector3 direction)
+    {
+        OnDamage(damage);
+        transform.DOMove(transform.position - direction, .1f);
+    }
 }
