@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public enum PlayerState
     {
@@ -19,6 +20,9 @@ public class Player : MonoBehaviour
 
     [Header("Run Setup")]
     [SerializeField] private float _runSpeedModifier = 1.5f;
+
+    [Header("Life")]
+    [SerializeField] private List<FlashColor> _flashColors;
 
     private CharacterController _charController;
     private float _verticalSpeed;
@@ -103,4 +107,18 @@ public class Player : MonoBehaviour
 
         StateMachine.SwitchState(PlayerState.STOP);
     }
+
+    #region Life
+
+    public void Damage(float damage)
+    {
+        _flashColors.ForEach(flash => flash.Flash());
+    }
+
+    public void Damage(float damage, Vector3 direction)
+    {
+        Damage(damage);
+    }
+
+    #endregion
 }

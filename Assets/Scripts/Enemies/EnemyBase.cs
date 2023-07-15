@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, IDamageable
 {
+    [SerializeField] private bool _lookAtPlayer;
     [SerializeField] private AnimationBase _animationBase;
     [SerializeField] private float _startLife = 10f;
     [SerializeField] private FlashColor _flashColor;
@@ -17,18 +18,20 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private float _currentLife;
     private Collider _collider;
+    private Player _player;
 
     private void Awake()
     {
         Init();
         _collider = GetComponent<Collider>();
+        _player = GameObject.FindObjectOfType<Player>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (_lookAtPlayer)
         {
-            OnDamage(5f);
+            transform.LookAt(_player.transform.position);
         }
     }
 
@@ -91,5 +94,14 @@ public class EnemyBase : MonoBehaviour, IDamageable
     {
         OnDamage(damage);
         transform.DOMove(transform.position - direction, .1f);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Player player = other.transform.GetComponent<Player>();
+        if (player != null)
+        {
+            player.Damage(1f);
+        }
     }
 }

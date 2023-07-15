@@ -14,9 +14,13 @@ public class FlashColor : MonoBehaviour
     private Color _defaultColor;
     private Tween _currentTween;
 
-    private void Awake()
+    private void OnValidate()
     {
         _renderer = GetComponent<Renderer>();
+    }
+
+    private void Start()
+    {
         _defaultColor = _renderer.material.GetColor("_EmissionColor");
     }
 

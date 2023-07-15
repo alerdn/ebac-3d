@@ -24,7 +24,7 @@ public class GunShootLimit : GunBase
                 Shoot();
                 _currentShoots++;
                 CheckRecharge();
-                UpdateUI();
+                UpdateUI(_maxShoot, _currentShoots);
                 yield return new WaitForSeconds(_timeBetweenShoot);
             }
         }
@@ -51,15 +51,20 @@ public class GunShootLimit : GunBase
         while (time < _timeToRecharge)
         {
             time += Time.deltaTime;
-            UiUpdater.UpdateValue(time / _timeToRecharge);
+            UpdateUI(time / _timeToRecharge);
             yield return new WaitForEndOfFrame();
         }
         _currentShoots = 0;
         _isRecharging = false;
     }
 
-    private void UpdateUI()
+    private void UpdateUI(float value)
     {
-        UiUpdater.UpdateValue(_maxShoot, _currentShoots);
+        if (UiUpdater != null) UiUpdater.UpdateValue(value);
+    }
+
+    private void UpdateUI(float max, float current)
+    {
+        if (UiUpdater != null) UiUpdater.UpdateValue(max, current);
     }
 }

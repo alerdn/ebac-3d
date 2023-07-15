@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileBase : MonoBehaviour
 {
     public float Speed = 50f;
 
+    [SerializeField] private List<string> _tagsToHit;
     [SerializeField] private int _damageAmount = 1;
     [SerializeField] private float _timeToDestroy = 2f;
 
@@ -19,16 +21,25 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        IDamageable damageable = other.transform.GetComponent<IDamageable>();
-
-        if (damageable != null)
+        foreach (string tag in _tagsToHit)
         {
-            Vector3 impactDirection = other.transform.position - transform.position;
-            impactDirection = -impactDirection.normalized;
-            impactDirection.y = 0f;
+            if (other.transform.CompareTag(tag))
+            {
+                IDamageable damageable = other.transform.GetComponent<IDamageable>();
 
-            damageable.Damage(_damageAmount, impactDirection);
-            Destroy(gameObject);
+                if (damageable != null)
+                {
+                    Vector3 impactDirection = other.transform.position - transform.position;
+                    impactDirection = -impactDirection.normalized;
+                    impactDirection.y = 0f;
+
+                    damageable.Damage(_damageAmount, impactDirection);
+                }
+
+                break;
+            }
         }
+
+        if (!other.transform.CompareTag("Projectile")) Destroy(gameObject);
     }
 }

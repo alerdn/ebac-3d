@@ -52,7 +52,7 @@ MonoBehaviour:
   _maxShoot: 10
   _timeToRecharge: 0.5
   _amountPerShot: 8
-  _angle: 5
+  _angle: 10
 --- !u!1 &6224473531513466819
 GameObject:
   m_ObjectHideFlags: 0

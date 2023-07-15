@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8152439068769073523}
   - component: {fileID: 6362769023511939812}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Enemy Projectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 50
   _tagsToHit:
-  - Enemy
+  - Player
   _damageAmount: 1
   _timeToDestroy: 2
 --- !u!54 &6362769023511939812

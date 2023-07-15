@@ -11,8 +11,10 @@ public class EnemyWalk : EnemyBase
 
     private int _index = 0;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         if (Vector3.Distance(transform.position, _waypoints[_index].position) < _minDistance)
         {
             _index++;

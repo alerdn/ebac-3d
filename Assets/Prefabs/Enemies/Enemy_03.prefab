@@ -4906,9 +4906,10 @@ GameObject:
   - component: {fileID: 66830929301336786}
   - component: {fileID: 66830929301336785}
   - component: {fileID: 66830929301336784}
+  - component: {fileID: 1893950090785596026}
   m_Layer: 0
   m_Name: Enemy_03
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4982,6 +4983,22 @@ MonoBehaviour:
     Trigger: Death
   - AnimationType: 4
     Trigger: Attack
+--- !u!54 &1893950090785596026
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66830929301336781}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &5287298130606950454
 MonoBehaviour:
   m_ObjectHideFlags: 0
