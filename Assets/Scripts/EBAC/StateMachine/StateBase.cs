@@ -1,19 +1,19 @@
 using UnityEngine;
 
-public class StateBase
+public abstract class StateBase
 {
-    public virtual void OnStateEnter()
+    public virtual void OnStateEnter(params object[] objs)
     {
-        Debug.Log("OnStateEnter1");
+
     }
 
     public virtual void OnStateStay()
     {
-        Debug.Log("OnStateStay");
+
     }
 
     public virtual void OnStateExit()
     {
-        Debug.Log("OnStateExit");
+
     }
 }

@@ -100,12 +100,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void StartStateMachine()
     {
-        StateMachine = new StateMachine<PlayerState>();
-        StateMachine.RegisterState(PlayerState.WALK, new PlayerStateWalk());
-        StateMachine.RegisterState(PlayerState.STOP, new PlayerStateStop());
-        StateMachine.RegisterState(PlayerState.JUMP, new PlayerStateJump());
 
-        StateMachine.SwitchState(PlayerState.STOP);
     }
 
     #region Life

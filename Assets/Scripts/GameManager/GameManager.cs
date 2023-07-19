@@ -22,9 +22,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Init()
     {
-        StateMachine = new StateMachine<GameState>();
-        StateMachine.RegisterState(GameState.INTRO, new GameStateIntro());
-
-        StateMachine.SwitchState(GameState.INTRO);
+        
     }
 }
