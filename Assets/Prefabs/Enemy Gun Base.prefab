@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 5112531509834670877}
   - component: {fileID: 5112531509834670878}
   m_Layer: 0
-  m_Name: Enamy Gun Base
+  m_Name: Enemy Gun Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiUpdater: {fileID: 0}
-  _prefabProjectileBase: {fileID: 8152439068769073523, guid: aa40322e12dc5f942adee1f3647f7874, type: 3}
+  _prefabProjectileBase: {fileID: 8152439068769073523, guid: c014d3daa39e2ca4cae79b8a84cfe36d, type: 3}
   _positionToShoot: {fileID: 5112531509732900195}
   _timeBetweenShoot: 2
   _projectileSpeed: 50

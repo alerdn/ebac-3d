@@ -5,11 +5,23 @@ using UnityEngine;
 public class EnemyShoot : EnemyBase
 {
     [SerializeField] private GunBase _gun;
+    [SerializeField] private int _minDistanceToShoot = 10;
 
-    protected override void Init()
+    private bool _isShooting;
+
+    protected override void Update()
     {
-        base.Init();
+        base.Update();
+        if (!_isShooting && Vector3.Distance(transform.position, player.transform.position) < _minDistanceToShoot)
+        {
+            _isShooting = true;
+            _gun.StartShoot();
+        }
+    }
 
-        _gun.StartShoot();
+    protected override void OnKill()
+    {
+        _gun.StopShoot();
+        base.OnKill();
     }
 }

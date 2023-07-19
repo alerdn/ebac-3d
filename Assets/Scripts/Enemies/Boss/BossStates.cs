@@ -19,7 +19,12 @@ public class BossStateInit : BossStateBase
     public override void OnStateEnter(params object[] objs)
     {
         base.OnStateEnter(objs);
-        boss.StartInitAnimation();
+        boss.StartInitAnimation(OnInit);
+    }
+
+    private void OnInit()
+    {
+        boss.SwitchState(BossAction.ATTACK);
     }
 }
 

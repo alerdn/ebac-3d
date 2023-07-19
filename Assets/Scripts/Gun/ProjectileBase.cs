@@ -26,14 +26,16 @@ public class ProjectileBase : MonoBehaviour
             if (other.transform.CompareTag(tag))
             {
                 IDamageable damageable = other.transform.GetComponent<IDamageable>();
+                HealthEnemy healthEnemy = other.transform.GetComponent<HealthEnemy>();
 
-                if (damageable != null)
+                if (damageable != null || healthEnemy)
                 {
                     Vector3 impactDirection = other.transform.position - transform.position;
                     impactDirection = -impactDirection.normalized;
                     impactDirection.y = 0f;
 
-                    damageable.Damage(_damageAmount, impactDirection);
+                    damageable?.Damage(_damageAmount, impactDirection);
+                    healthEnemy?.Damage(_damageAmount, impactDirection);
                 }
 
                 break;

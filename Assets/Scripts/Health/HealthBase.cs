@@ -33,19 +33,19 @@ public class HealthBase : MonoBehaviour
 
     #endregion
 
-    protected virtual void ResetLife()
+    public virtual void ResetLife()
     {
         _currentLife = _startLife;
     }
 
-    protected virtual void Kill()
+    public virtual void Kill()
     {
         if (_destroyOnKill) Destroy(gameObject, 3f);
 
         OnKill?.Invoke(this);
     }
 
-    protected virtual void Damage(float damage)
+    public virtual void Damage(float damage)
     {
         _currentLife -= damage;
 

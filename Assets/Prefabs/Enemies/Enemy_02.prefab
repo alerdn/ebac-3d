@@ -71,6 +71,7 @@ MonoBehaviour:
   _startAnimationEase: 27
   _startWithBornAnimation: 1
   _gun: {fileID: 5595985562250359692}
+  _minDistanceToShoot: 50
 --- !u!65 &7797340176554490517
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5109,7 +5110,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5112531509834670876, guid: 5b804aceaa9ef874b84dd2187f4fb2b7, type: 3}
       propertyPath: m_Name
-      value: Enamy Gun Base
+      value: Enemy Gun Base
       objectReference: {fileID: 0}
     - target: {fileID: 5112531509834670877, guid: 5b804aceaa9ef874b84dd2187f4fb2b7, type: 3}
       propertyPath: m_RootOrder

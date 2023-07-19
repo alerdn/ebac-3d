@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -18,20 +16,20 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private float _currentLife;
     private Collider _collider;
-    private Player _player;
+    protected Player player;
 
     private void Awake()
     {
         Init();
         _collider = GetComponent<Collider>();
-        _player = GameObject.FindObjectOfType<Player>();
+        player = GameObject.FindObjectOfType<Player>();
     }
 
     protected virtual void Update()
     {
         if (_lookAtPlayer)
         {
-            transform.LookAt(_player.transform.position);
+            transform.LookAt(player.transform.position);
         }
     }
 
@@ -80,6 +78,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void OnKill()
     {
+        _lookAtPlayer = false;
         if (_collider != null) _collider.enabled = false;
         PlayAnimationByTrigger(AnimationType.DEATH);
         Destroy(gameObject, 3f);
