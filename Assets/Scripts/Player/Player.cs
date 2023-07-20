@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour
 {
     public enum PlayerState
     {
@@ -10,8 +11,8 @@ public class Player : MonoBehaviour, IDamageable
         JUMP
     }
 
-    public StateMachine<PlayerState> StateMachine { get; private set; }
     public Animator Animator => _animator;
+    public HealthBase Health => _healthBase;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private float _moveSpeed = 25f;
@@ -25,10 +26,12 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private List<FlashColor> _flashColors;
 
     private CharacterController _charController;
+    private HealthBase _healthBase;
     private float _verticalSpeed;
     private float _turnSmoothVelocity;
     private Inputs _inputs;
     private bool _canRun;
+    private bool _isAlive = true;
 
     private void OnEnable()
     {
@@ -43,11 +46,28 @@ public class Player : MonoBehaviour, IDamageable
     private void Start()
     {
         _charController = GetComponent<CharacterController>();
+
+        _healthBase = GetComponent<HealthBase>();
+        _healthBase.OnDamage += Damage;
+        _healthBase.OnKill += Kill;
+
         StartInputs();
-        StartStateMachine();
     }
 
     private void Update()
+    {
+        HandleMovement();
+    }
+
+    private void StartInputs()
+    {
+        _inputs = new Inputs();
+        _inputs.Enable();
+        _inputs.Gameplay.Run.performed += (ctx) => _canRun = true;
+        _inputs.Gameplay.Run.canceled += (ctx) => _canRun = false;
+    }
+
+    public void HandleMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -65,7 +85,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         _animator.speed = 1f;
-        bool isWalking = direction.magnitude >= .1f;
+        bool isWalking = direction.magnitude >= .1f && _isAlive;
         if (isWalking)
         {
             if (_canRun)
@@ -87,33 +107,44 @@ public class Player : MonoBehaviour, IDamageable
 
         _charController.Move(speedVector * Time.deltaTime);
         _animator.SetBool("Run", isWalking);
-
-    }
-
-    private void StartInputs()
-    {
-        _inputs = new Inputs();
-        _inputs.Enable();
-        _inputs.Gameplay.Run.performed += (ctx) => _canRun = true;
-        _inputs.Gameplay.Run.canceled += (ctx) => _canRun = false;
-    }
-
-    private void StartStateMachine()
-    {
-
     }
 
     #region Life
 
-    public void Damage(float damage)
+    private void Revive()
+    {
+        _isAlive = true;
+        _charController.enabled = true;
+        _animator.SetTrigger("Revive");
+        _healthBase.ResetLife();
+        Respawn();
+    }
+
+    private void Damage(HealthBase hb)
     {
         _flashColors.ForEach(flash => flash.Flash());
     }
 
-    public void Damage(float damage, Vector3 direction)
+    private void Kill(HealthBase hb)
     {
-        Damage(damage);
+        if (_isAlive)
+        {
+            _isAlive = false;
+            _charController.enabled = false;
+            _animator.SetTrigger("Death");
+
+            Invoke(nameof(Revive), 2f);
+        }
     }
 
     #endregion
+
+    [Button]
+    public void Respawn()
+    {
+        if (CheckpointManager.Instance.HasCheckpoint())
+        {
+            transform.position = CheckpointManager.Instance.GetLastCheckpointPosition();
+        }
+    }
 }

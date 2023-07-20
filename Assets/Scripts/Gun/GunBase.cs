@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunBase : MonoBehaviour
 {
-    public UIGunUpdater UiUpdater;
+    public UIFillUpdater UiUpdater;
 
     [SerializeField] protected ProjectileBase _prefabProjectileBase;
     [SerializeField] protected Transform _positionToShoot;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerAbilityShoot : PlayerAbilityBase
 {
-    [SerializeField] private UIGunUpdater _uiGunUpdater;
+    [SerializeField] private UIFillUpdater _uiGunUpdater;
     [SerializeField] private List<GunBase> _guns;
     [SerializeField] private Transform _gunHolder;
 

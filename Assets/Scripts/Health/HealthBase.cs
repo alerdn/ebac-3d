@@ -4,14 +4,20 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class HealthBase : MonoBehaviour
+public class HealthBase : MonoBehaviour, IDamageable
 {
     public Action<HealthBase> OnDamage;
     public Action<HealthBase> OnKill;
 
-    [SerializeField] private bool _destroyOnKill;
+    [Header("UI")]
+    [SerializeField] private UIFillUpdater _uiUpdater;
+
+    [Header("Setup")]
     [SerializeField] private float _startLife = 10f;
-    private float _currentLife;
+    [SerializeField] private bool _destroyOnKill;
+
+    [Header("Debug")]
+    [SerializeField] private float _currentLife;
 
     private void Awake()
     {
@@ -21,17 +27,8 @@ public class HealthBase : MonoBehaviour
     protected void Init()
     {
         ResetLife();
+        UpdateUI();
     }
-
-    #region Debug
-
-    [Button]
-    private void Damage()
-    {
-        Damage(5f);
-    }
-
-    #endregion
 
     public virtual void ResetLife()
     {
@@ -54,6 +51,20 @@ public class HealthBase : MonoBehaviour
             Kill();
         }
 
+        UpdateUI();
         OnDamage?.Invoke(this);
+    }
+
+    public void Damage(float damage, Vector3 direction)
+    {
+        Damage(damage);
+    }
+
+    private void UpdateUI()
+    {
+        if (_uiUpdater != null)
+        {
+            _uiUpdater.UpdateValue(_currentLife / _startLife);
+        }
     }
 }

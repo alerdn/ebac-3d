@@ -100,7 +100,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
         Player player = other.transform.GetComponent<Player>();
         if (player != null)
         {
-            player.Damage(1f);
+            player.Health.Damage(1f);
         }
     }
 }

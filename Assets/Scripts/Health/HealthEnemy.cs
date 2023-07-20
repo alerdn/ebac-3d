@@ -15,19 +15,4 @@ public class HealthEnemy : HealthBase
 
         base.Damage(damage);
     }
-
-    public void Damage(float damage, Vector3 direction)
-    {
-        Damage(damage);
-        transform.DOMove(transform.position - direction, .1f);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Player player = other.transform.GetComponent<Player>();
-        if (player != null)
-        {
-            player.Damage(1f);
-        }
-    }
 }
