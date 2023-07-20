@@ -14,6 +14,7 @@ public class CheckpointManager : Singleton<CheckpointManager>
         if (newCheckpointKey > _lastCheckpointKey)
         {
             _lastCheckpointKey = newCheckpointKey;
+            Notification.Instance.ShowNotification("checkpoint ativado", 2f);
         }
     }
 

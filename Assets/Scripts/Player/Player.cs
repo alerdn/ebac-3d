@@ -139,6 +139,7 @@ public class Player : MonoBehaviour
             _animator.SetTrigger("Death");
 
             Invoke(nameof(Revive), 2f);
+            Notification.Instance.ShowNotification("Você foi derrotado", 2f);
         }
     }
 

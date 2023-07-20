@@ -16,6 +16,8 @@ public class BossHelper : MonoBehaviour
         {
             _isBattleStarted = true;
             _boss.SwitchState(BossAction.INIT);
+
+            Notification.Instance.ShowNotification("uma mega slime surgiu!!!", 3f);
         }
 
     }

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class HealthBase : MonoBehaviour, IDamageable
@@ -10,7 +8,7 @@ public class HealthBase : MonoBehaviour, IDamageable
     public Action<HealthBase> OnKill;
 
     [Header("UI")]
-    [SerializeField] private UIFillUpdater _uiUpdater;
+    [SerializeField] private List<UIFillUpdater> _uiUpdaters;
 
     [Header("Setup")]
     [SerializeField] private float _startLife = 10f;
@@ -27,12 +25,12 @@ public class HealthBase : MonoBehaviour, IDamageable
     protected void Init()
     {
         ResetLife();
-        UpdateUI();
     }
 
     public virtual void ResetLife()
     {
         _currentLife = _startLife;
+        UpdateUI();
     }
 
     public virtual void Kill()
@@ -62,9 +60,9 @@ public class HealthBase : MonoBehaviour, IDamageable
 
     private void UpdateUI()
     {
-        if (_uiUpdater != null)
+        foreach (var uiUpdater in _uiUpdaters)
         {
-            _uiUpdater.UpdateValue(_currentLife / _startLife);
+            uiUpdater.UpdateValue(_currentLife / _startLife);
         }
     }
 }
