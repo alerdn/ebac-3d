@@ -17,7 +17,7 @@ public class HealthBase : MonoBehaviour, IDamageable
     [Header("Debug")]
     [SerializeField] private float _currentLife;
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
