@@ -114,10 +114,15 @@ public class Player : MonoBehaviour
     private void Revive()
     {
         _isAlive = true;
-        _charController.enabled = true;
         _animator.SetTrigger("Revive");
         _healthBase.ResetLife();
         Respawn();
+        Invoke(nameof(TurnOnCollider), .1f);
+    }
+
+    private void TurnOnCollider()
+    {
+        _charController.enabled = true;
     }
 
     private void Damage(HealthBase hb)
