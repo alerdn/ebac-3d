@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BossHelper : MonoBehaviour
 {
     [SerializeField] private BossBase _boss;
+    [SerializeField] private CinemachineVirtualCamera _camera;
 
     private bool _isBattleStarted;
+
+    private void Start()
+    {
+        TurnCamera(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,7 +25,12 @@ public class BossHelper : MonoBehaviour
             _boss.SwitchState(BossAction.INIT);
 
             Notification.Instance.ShowNotification("uma mega slime surgiu!!!", 3f);
+            TurnCamera(true);
         }
+    }
 
+    private void TurnCamera(bool enabled)
+    {
+        _camera.enabled = enabled;
     }
 }

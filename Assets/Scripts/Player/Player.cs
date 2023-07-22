@@ -128,6 +128,8 @@ public class Player : MonoBehaviour
     private void Damage(HealthBase hb)
     {
         _flashColors.ForEach(flash => flash.Flash());
+        EffectManager.Instance.ChangeVignette();
+        ShakeCamera.Instance.Shake(3f, 3f, .2f);
     }
 
     private void Kill(HealthBase hb)
