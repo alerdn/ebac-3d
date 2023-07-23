@@ -26,12 +26,18 @@ public class ItemManager : Singleton<ItemManager>
         _itemSetups.ForEach(setup => setup.SOInt.Value = 0);
     }
 
+    public ItemSetup GetSetupByType(ItemType itemType)
+    {
+        return _itemSetups.Find(setup => setup.ItemType == itemType);
+    }
+
     public void AddByType(ItemType itemType, int amount = 1)
     {
         if (amount < 0) return;
 
         _itemSetups.Find(setup => setup.ItemType == itemType).SOInt.Value += amount;
     }
+
     public void RemoveByType(ItemType itemType, int amount = 1)
     {
         if (amount < 0) return;
@@ -49,4 +55,6 @@ public class ItemSetup
     public ItemType ItemType;
     public Sprite Sprite;
     public SOInt SOInt;
+    public bool IsUseable;
+    public string Key;
 }

@@ -57,6 +57,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""097f19b8-87a0-4b6f-a0f6-8198d49f81e9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -147,6 +155,17 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5834d0da-7bae-40f1-811f-f9a3e6be109f"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -160,6 +179,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Gameplay_SelectPrimaryGun = m_Gameplay.FindAction("SelectPrimaryGun", throwIfNotFound: true);
         m_Gameplay_SelectSecondaryGun = m_Gameplay.FindAction("SelectSecondaryGun", throwIfNotFound: true);
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
+        m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -214,6 +234,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_SelectPrimaryGun;
     private readonly InputAction m_Gameplay_SelectSecondaryGun;
     private readonly InputAction m_Gameplay_Run;
+    private readonly InputAction m_Gameplay_Heal;
     public struct GameplayActions
     {
         private @Inputs m_Wrapper;
@@ -223,6 +244,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @SelectPrimaryGun => m_Wrapper.m_Gameplay_SelectPrimaryGun;
         public InputAction @SelectSecondaryGun => m_Wrapper.m_Gameplay_SelectSecondaryGun;
         public InputAction @Run => m_Wrapper.m_Gameplay_Run;
+        public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -247,6 +269,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Run.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRun;
+                @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -266,6 +291,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Heal.started += instance.OnHeal;
+                @Heal.performed += instance.OnHeal;
+                @Heal.canceled += instance.OnHeal;
             }
         }
     }
@@ -277,5 +305,6 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnSelectPrimaryGun(InputAction.CallbackContext context);
         void OnSelectSecondaryGun(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnHeal(InputAction.CallbackContext context);
     }
 }
