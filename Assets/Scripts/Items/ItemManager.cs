@@ -12,6 +12,8 @@ public enum ItemType
 
 public class ItemManager : Singleton<ItemManager>
 {
+    public List<ItemSetup> ItemSetup => _itemSetups;
+
     [SerializeField] private List<ItemSetup> _itemSetups;
 
     private void Start()
@@ -45,5 +47,6 @@ public class ItemManager : Singleton<ItemManager>
 public class ItemSetup
 {
     public ItemType ItemType;
+    public Sprite Sprite;
     public SOInt SOInt;
 }
