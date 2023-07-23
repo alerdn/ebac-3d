@@ -43,14 +43,4 @@ public class ShakeCamera : Singleton<ShakeCamera>
 
         _shakeTime = time;
     }
-
-    #region Debug
-
-    [Button]
-    private void Shake()
-    {
-        Shake(3f, 3f, .3f);
-    }
-
-    #endregion
 }

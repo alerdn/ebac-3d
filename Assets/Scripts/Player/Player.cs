@@ -147,7 +147,6 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    [Button]
     public void Respawn()
     {
         if (CheckpointManager.Instance.HasCheckpoint())

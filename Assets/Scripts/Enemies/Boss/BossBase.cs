@@ -114,28 +114,6 @@ public class BossBase : MonoBehaviour
 
     #endregion
 
-    #region Debug
-
-    [Button]
-    private void SwitchInit()
-    {
-        SwitchState(BossAction.INIT);
-    }
-
-    [Button]
-    private void SwitchWalk()
-    {
-        SwitchState(BossAction.WALK);
-    }
-
-    [Button]
-    private void SwithAttack()
-    {
-        SwitchState(BossAction.ATTACK);
-    }
-
-    #endregion
-
     #region State Machine
     public void SwitchState(BossAction state)
     {

@@ -24,7 +24,6 @@ public class FlashColor : MonoBehaviour
         _defaultColor = _renderer.material.GetColor("_EmissionColor");
     }
 
-    [Button]
     public void Flash()
     {
         if (!_currentTween.IsActive())
