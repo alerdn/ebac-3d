@@ -112,8 +112,30 @@
                 },
                 {
                     "name": "",
+                    "id": "6e2aacab-6c78-4b96-98f1-1637184f0a0f",
+                    "path": "<HID::Sony Interactive Entertainment DualSense Wireless Controller>/hat/up",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectPrimaryGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2e32909b-f026-4b39-8c5b-615234fb21ad",
                     "path": "<Keyboard>/2",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectSecondaryGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b41261f-6092-4788-9407-4b61eab3cee0",
+                    "path": "<HID::Sony Interactive Entertainment DualSense Wireless Controller>/hat/right",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -147,6 +169,17 @@
                     "name": "",
                     "id": "5834d0da-7bae-40f1-811f-f9a3e6be109f",
                     "path": "<Keyboard>/f",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8576c7c0-8e17-4f1c-a65c-f998d1be4673",
+                    "path": "<HID::Sony Interactive Entertainment DualSense Wireless Controller>/button5",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
