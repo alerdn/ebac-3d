@@ -15,11 +15,11 @@ public class ItemCollectableBase : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private AudioSource audioSource;
 
-    private Collider _collider;
+    private Collider[] _colliders;
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
+        _colliders = GetComponents<Collider>();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -33,7 +33,7 @@ public class ItemCollectableBase : MonoBehaviour
     protected virtual void Collect()
     {
         graphicItem.SetActive(false);
-        _collider.enabled = false;
+        foreach (Collider collider in _colliders) collider.enabled = false;
         Invoke(nameof(HideObject), timeToHide);
         OnCollect();
     }

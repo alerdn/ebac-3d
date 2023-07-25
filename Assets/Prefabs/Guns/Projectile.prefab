@@ -112,6 +112,7 @@ MonoBehaviour:
   Speed: 50
   _tagsToHit:
   - Enemy
+  - DestructableItem
   _damageAmount: 1
   _timeToDestroy: 2
 --- !u!54 &6362769023511939812
