@@ -56,7 +56,7 @@ public class Player : Singleton<Player>
 
     private void Update()
     {
-        HandleMovement();
+        Movement();
     }
 
     private void StartInputs()
@@ -67,18 +67,19 @@ public class Player : Singleton<Player>
         _inputs.Gameplay.Run.canceled += (ctx) => _canRun = false;
     }
 
-    public void HandleMovement()
+    private void Movement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector2 inputDirection = _inputs.Gameplay.Move.ReadValue<Vector2>();
 
+        float horizontal = inputDirection.x;
+        float vertical = inputDirection.y;
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         Vector3 speedVector = direction * _moveSpeed;
 
         if (_charController.isGrounded)
         {
             _verticalSpeed = 0;
-            if (Input.GetButtonDown("Jump"))
+            if (_inputs.Gameplay.Jump.triggered)
             {
                 _verticalSpeed = _jumpSpeed;
             }
