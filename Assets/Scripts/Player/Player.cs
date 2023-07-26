@@ -32,6 +32,7 @@ public class Player : Singleton<Player>
     private Inputs _inputs;
     private bool _canRun;
     private bool _isAlive = true;
+    Vector2 _inputDirection = Vector2.zero;
 
     private void OnEnable()
     {
@@ -65,14 +66,15 @@ public class Player : Singleton<Player>
         _inputs.Enable();
         _inputs.Gameplay.Run.performed += (ctx) => _canRun = true;
         _inputs.Gameplay.Run.canceled += (ctx) => _canRun = false;
+
+        _inputs.Gameplay.Move.performed += (ctx) => _inputDirection = ctx.ReadValue<Vector2>();
+        _inputs.Gameplay.Move.canceled += (ctx) => _inputDirection = Vector2.zero;
     }
 
     private void Movement()
     {
-        Vector2 inputDirection = _inputs.Gameplay.Move.ReadValue<Vector2>();
-
-        float horizontal = inputDirection.x;
-        float vertical = inputDirection.y;
+        float horizontal = _inputDirection.x;
+        float vertical = _inputDirection.y;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         Vector3 speedVector = direction * _moveSpeed;
 
