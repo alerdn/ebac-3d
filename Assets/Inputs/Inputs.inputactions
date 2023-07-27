@@ -114,17 +114,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2353b4c9-f7b3-424c-9b4d-43cfe6dadf50",
-                    "path": "<Keyboard>/f",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "ChangeGun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c1f06d50-69c1-474b-a453-b60ac600fb2b",
                     "path": "<Keyboard>/1",
                     "interactions": "Press",

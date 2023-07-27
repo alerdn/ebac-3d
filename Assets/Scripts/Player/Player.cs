@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 
 public class Player : Singleton<Player>
@@ -24,6 +24,9 @@ public class Player : Singleton<Player>
 
     [Header("Life")]
     [SerializeField] private List<FlashColor> _flashColors;
+
+    [Header("Cloth")]
+    [SerializeField] private ClothChanger _clothChanger;
 
     private CharacterController _charController;
     private HealthBase _healthBase;
@@ -156,5 +159,30 @@ public class Player : Singleton<Player>
         {
             transform.position = CheckpointManager.Instance.GetLastCheckpointPosition();
         }
+    }
+
+    public void ChangeSpeed(float speed, float duration)
+    {
+        StartCoroutine(ChangeSpeedRoutine(speed, duration));
+    }
+
+    private IEnumerator ChangeSpeedRoutine(float speed, float duration)
+    {
+        float defaultSpeed = _moveSpeed;
+        _moveSpeed = speed;
+        yield return new WaitForSeconds(duration);
+        _moveSpeed = defaultSpeed;
+    }
+
+    public void ChangeTexture(ClothSetup setup, float duration)
+    {
+        StartCoroutine(ChangeTextureRoutine(setup, duration));
+    }
+
+    private IEnumerator ChangeTextureRoutine(ClothSetup setup, float duration)
+    {
+        _clothChanger.ChangeTexture(setup);
+        yield return new WaitForSeconds(duration);
+        _clothChanger.ResetTexture();
     }
 }
