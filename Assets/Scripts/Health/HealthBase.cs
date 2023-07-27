@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class HealthBase : MonoBehaviour, IDamageable
     [Header("Setup")]
     [SerializeField] private float _startLife = 10f;
     [SerializeField] private bool _destroyOnKill;
+    [SerializeField] private float _damageMultiplier = 1f;
 
     [Header("Debug")]
     [SerializeField] private float _currentLife;
@@ -42,7 +44,7 @@ public class HealthBase : MonoBehaviour, IDamageable
 
     public virtual void Damage(float damage)
     {
-        _currentLife -= damage;
+        _currentLife -= damage * _damageMultiplier;
 
         if (_currentLife <= 0)
         {
@@ -64,5 +66,17 @@ public class HealthBase : MonoBehaviour, IDamageable
         {
             uiUpdater.UpdateValue(_currentLife / _startLife);
         }
+    }
+
+    public void ChangeDamageMultiplier(float damageMultiplier, float duration)
+    {
+        StartCoroutine(ChangeDamageMultiplierRoutine(damageMultiplier, duration));
+    }
+
+    private IEnumerator ChangeDamageMultiplierRoutine(float damageMultiplier, float duration)
+    {
+        _damageMultiplier = damageMultiplier;
+        yield return new WaitForSeconds(duration);
+        _damageMultiplier = 1f;
     }
 }

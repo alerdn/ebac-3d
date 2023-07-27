@@ -1,11 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum ClothType
 {
-    SPEED
+    BASIC,
+    SPEED,
+    STRONG
 }
 
 public class ClothManager : Singleton<ClothManager>
