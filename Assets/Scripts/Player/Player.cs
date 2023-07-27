@@ -36,6 +36,7 @@ public class Player : Singleton<Player>
     private bool _canRun;
     private bool _isAlive = true;
     Vector2 _inputDirection = Vector2.zero;
+    private Transform _cam;
 
     private void OnEnable()
     {
@@ -50,6 +51,7 @@ public class Player : Singleton<Player>
     private void Start()
     {
         _charController = GetComponent<CharacterController>();
+        _cam = Camera.main.transform;
 
         _healthBase = GetComponent<HealthBase>();
         _healthBase.OnDamage += Damage;
@@ -79,7 +81,13 @@ public class Player : Singleton<Player>
         float horizontal = _inputDirection.x;
         float vertical = _inputDirection.y;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        Vector3 speedVector = direction * _moveSpeed;
+
+        /// Cria o vector de movimentação do player levando em consideração
+        /// a direção das teclas e a rotação da câmera
+        /// Ref: https://www.youtube.com/watch?v=4HpC--2iowE
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, .1f);
+        Vector3 speedVector = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * _moveSpeed;
 
         if (_charController.isGrounded)
         {
@@ -100,16 +108,15 @@ public class Player : Singleton<Player>
                 _animator.speed = _runSpeedModifier;
             }
         }
+        else
+        {
+            speedVector = Vector3.zero;
+        }
 
         _verticalSpeed -= _gravity * Time.deltaTime;
         speedVector.y = _verticalSpeed;
 
-        if (isWalking)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, .1f);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        }
+        if (isWalking) transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
         _charController.Move(speedVector * Time.deltaTime);
         _animator.SetBool("Run", isWalking);
