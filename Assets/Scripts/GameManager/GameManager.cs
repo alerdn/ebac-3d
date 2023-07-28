@@ -22,6 +22,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Init()
     {
-        
+        Cursor.visible = false;
     }
 }
