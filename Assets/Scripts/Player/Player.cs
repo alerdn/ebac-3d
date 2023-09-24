@@ -37,6 +37,7 @@ public class Player : Singleton<Player>
     private bool _isAlive = true;
     Vector2 _inputDirection = Vector2.zero;
     private Transform _cam;
+    private bool _isJumping;
 
     private void OnEnable()
     {
@@ -91,10 +92,19 @@ public class Player : Singleton<Player>
 
         if (_charController.isGrounded)
         {
+            if (_isJumping)
+            {
+                _isJumping = false;
+                _animator.SetTrigger("Land");
+            }
+
             _verticalSpeed = 0;
             if (_inputs.Gameplay.Jump.triggered)
             {
                 _verticalSpeed = _jumpSpeed;
+
+                _isJumping = true;
+                _animator.SetTrigger("Jump");
             }
         }
 
