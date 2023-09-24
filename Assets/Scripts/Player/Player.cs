@@ -16,8 +16,12 @@ public class Player : Singleton<Player>
 
     [SerializeField] private Animator _animator;
     [SerializeField] private float _moveSpeed = 25f;
-    [SerializeField] private float _jumpSpeed = 15f;
     [SerializeField] private float _gravity = -9.8f;
+    [SerializeField] private float _jumpSpeed = 15f;
+
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem _vfxRun;
+    [SerializeField] private ParticleSystem _vfxJump;
 
     [Header("Run Setup")]
     [SerializeField] private float _runSpeedModifier = 1.5f;
@@ -92,6 +96,11 @@ public class Player : Singleton<Player>
 
         if (_charController.isGrounded)
         {
+            if (_vfxRun.isPaused)
+            {
+                _vfxRun.Play();
+            }
+
             if (_isJumping)
             {
                 _isJumping = false;
@@ -105,7 +114,12 @@ public class Player : Singleton<Player>
 
                 _isJumping = true;
                 _animator.SetTrigger("Jump");
+                _vfxJump.Play();
             }
+        }
+        else
+        {
+            _vfxRun.Pause();
         }
 
         _animator.speed = 1f;
