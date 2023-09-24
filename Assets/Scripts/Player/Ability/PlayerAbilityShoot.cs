@@ -9,6 +9,7 @@ public class PlayerAbilityShoot : PlayerAbilityBase
     [SerializeField] private UIFillUpdater _uiGunUpdater;
     [SerializeField] private List<GunBase> _guns;
     [SerializeField] private Transform _gunHolder;
+    [SerializeField] private FlashColor _flashColor;
 
     [SerializeField] private GunBase _currentGun;
     [SerializeField] private int _currentGunIndex;
@@ -38,6 +39,7 @@ public class PlayerAbilityShoot : PlayerAbilityBase
     private void StartShoot()
     {
         _currentGun.StartShoot();
+        _flashColor?.Flash();
     }
 
     private void StopShoot()

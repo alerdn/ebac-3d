@@ -9,6 +9,7 @@ public class FlashColor : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Color _color = Color.red;
     [SerializeField] private float _duration = .1f;
+    [SerializeField] private string _colorParameter = "_EmissionColor";
 
     private Renderer _renderer;
     private Color _defaultColor;
@@ -21,12 +22,13 @@ public class FlashColor : MonoBehaviour
 
     private void Start()
     {
-        _defaultColor = _renderer.material.GetColor("_EmissionColor");
+        _defaultColor = _renderer.material.GetColor(_colorParameter);
     }
 
+    [Button]
     public void Flash()
     {
         if (!_currentTween.IsActive())
-            _currentTween = _renderer.material.DOColor(_color, "_EmissionColor", _duration).SetLoops(2, LoopType.Yoyo);
+            _currentTween = _renderer.material.DOColor(_color, _colorParameter, _duration).SetLoops(2, LoopType.Yoyo);
     }
 }
