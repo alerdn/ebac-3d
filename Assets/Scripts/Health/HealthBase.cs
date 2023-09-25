@@ -8,6 +8,18 @@ public class HealthBase : MonoBehaviour, IDamageable
     public Action<HealthBase> OnDamage;
     public Action<HealthBase> OnKill;
 
+    public float CurrentLife
+    {
+        get => _currentLife;
+        set
+        {
+            _currentLife = value;
+            UpdateUI();
+        }
+    }
+
+    public float StartLife => _startLife;
+
     [Header("UI")]
     [SerializeField] private List<UIFillUpdater> _uiUpdaters;
 
@@ -16,8 +28,7 @@ public class HealthBase : MonoBehaviour, IDamageable
     [SerializeField] private bool _destroyOnKill;
     [SerializeField] private float _damageMultiplier = 1f;
 
-    [Header("Debug")]
-    [SerializeField] private float _currentLife;
+    private float _currentLife;
 
     private void Start()
     {

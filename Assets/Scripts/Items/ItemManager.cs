@@ -16,6 +16,12 @@ public class ItemManager : Singleton<ItemManager>
 
     [SerializeField] private List<ItemSetup> _itemSetups;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         Reset();
@@ -36,6 +42,13 @@ public class ItemManager : Singleton<ItemManager>
         if (amount < 0) return;
 
         _itemSetups.Find(setup => setup.ItemType == itemType).SOInt.Value += amount;
+    }
+
+    public void SetByType(ItemType itemType, int amount)
+    {
+        if (amount < 0) return;
+
+        _itemSetups.Find(setup => setup.ItemType == itemType).SOInt.Value = amount;
     }
 
     public void RemoveByType(ItemType itemType, int amount = 1)

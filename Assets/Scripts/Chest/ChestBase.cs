@@ -4,9 +4,11 @@ using NaughtyAttributes;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class ChestBase : MonoBehaviour
 {
+    public UnityEvent _OnChestOpened;
 
     [SerializeField] private ChestItemBase _chestItem;
 
@@ -30,7 +32,7 @@ public class ChestBase : MonoBehaviour
     {
         _inputs.Disable();
     }
-
+    
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -54,6 +56,7 @@ public class ChestBase : MonoBehaviour
             _isChestOpened = true;
             HideNotification();
             Invoke(nameof(ShowItem), .5f);
+            _OnChestOpened?.Invoke();
         }
     }
 

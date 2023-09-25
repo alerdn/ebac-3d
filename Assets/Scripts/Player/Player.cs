@@ -13,6 +13,7 @@ public class Player : Singleton<Player>
 
     public Animator Animator => _animator;
     public HealthBase Health => _healthBase;
+    public ClothChanger ClothChanger => _clothChanger;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private float _moveSpeed = 25f;
@@ -188,7 +189,11 @@ public class Player : Singleton<Player>
     {
         if (CheckpointManager.Instance.HasCheckpoint())
         {
-            transform.position = CheckpointManager.Instance.GetLastCheckpointPosition();
+            Vector3 respawnPosition = CheckpointManager.Instance.GetLastCheckpointPosition();
+            if (respawnPosition != Vector3.zero)
+            {
+                transform.position = respawnPosition;
+            }
         }
     }
 

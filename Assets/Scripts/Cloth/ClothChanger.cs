@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ClothChanger : MonoBehaviour
 {
+    public Texture CurrentTexture;
+
     [SerializeField] private SkinnedMeshRenderer _renderer;
     [SerializeField] private Texture2D _texture;
 
@@ -13,19 +15,24 @@ public class ClothChanger : MonoBehaviour
         _defaultTexture = (Texture2D)_renderer.materials[0].GetTexture("_EmissionMap");
     }
 
-    [Button]
-    public void ChangeTexture()
-    {
-        _renderer.materials[0].SetTexture("_EmissionMap", _texture);
-    }
-
     public void ChangeTexture(ClothSetup setup)
     {
-        _renderer.materials[0].SetTexture("_EmissionMap", setup.Texture);
+        CurrentTexture = setup.Texture;
+        _renderer.materials[0].SetTexture("_EmissionMap", CurrentTexture);
     }
+
+    public void SetTexture(Texture texture)
+    {
+        if (texture == null) return;
+
+        CurrentTexture = texture;
+        _renderer.materials[0].SetTexture("_EmissionMap", CurrentTexture);
+    }
+
 
     public void ResetTexture()
     {
-        _renderer.materials[0].SetTexture("_EmissionMap", _defaultTexture);
+        CurrentTexture = _defaultTexture;
+        _renderer.materials[0].SetTexture("_EmissionMap", CurrentTexture);
     }
 }
