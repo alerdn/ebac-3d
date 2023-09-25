@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiUpdater: {fileID: 0}
+  _sfxType: 3
   _prefabProjectileBase: {fileID: 8152439068769073523, guid: aa40322e12dc5f942adee1f3647f7874, type: 3}
   _positionToShoot: {fileID: 6224473531513466818}
   _timeBetweenShoot: 0.2

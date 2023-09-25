@@ -18,7 +18,7 @@ public class SaveManager : Singleton<SaveManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-        _path = Application.streamingAssetsPath + "/save.json";
+        _path = Application.persistentDataPath + "/save.json";
     }
 
     public void Save()

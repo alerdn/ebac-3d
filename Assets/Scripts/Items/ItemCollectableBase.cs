@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemCollectableBase : MonoBehaviour
 {
+    [SerializeField] private SFXType _sfxType;
     [SerializeField] private ItemType _type;
 
     [Header("Setup")]
@@ -48,5 +49,11 @@ public class ItemCollectableBase : MonoBehaviour
         if (mParticleSystem != null) mParticleSystem.Play();
         if (audioSource != null) audioSource.Play();
         ItemManager.Instance.AddByType(_type);
+        PlaySfx();
+    }
+
+    public void PlaySfx()
+    {
+        SFXPool.Instance.Play(_sfxType);
     }
 }

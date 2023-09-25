@@ -22,31 +22,31 @@ public class LevelManager : Singleton<LevelManager>
         SceneManager.LoadScene("SCN_Game_" + level);
         _loadingScreen.SetActive(true);
 
-        IEnumerator CheckLoad()
-        {
-            yield return new WaitForSeconds(1f);
-
-            SaveSetup setup = SaveManager.Instance.SaveSetup;
-
-            // Set checkpoints
-            CheckpointManager.Instance.SaveCheckpoint(setup.LastCheckpointKey);
-
-            // Set items
-            ItemManager.Instance.SetByType(ItemType.COIN, setup.Coins);
-            ItemManager.Instance.SetByType(ItemType.LIFE_PACK, setup.LifePacks);
-
-            // Respawn at checkpoint and set details
-            Player.Instance.Respawn();
-            Player.Instance.ClothChanger.SetTexture(setup.PlayerCurrentTexture);
-            Debug.Log(setup.PlayerCurrentLife);
-            if (setup.PlayerCurrentLife > 0f)
-                Player.Instance.Health.CurrentLife = setup.PlayerCurrentLife;
-
-            _loadingScreen.SetActive(false);
-        }
         StartCoroutine(CheckLoad());
 
         SaveManager.Instance.SaveLevel(level);
+    }
+
+    private IEnumerator CheckLoad()
+    {
+        yield return new WaitForSeconds(1f);
+
+        SaveSetup setup = SaveManager.Instance.SaveSetup;
+
+        // Set checkpoints
+        CheckpointManager.Instance.SaveCheckpoint(setup.LastCheckpointKey);
+
+        // Set items
+        ItemManager.Instance.SetByType(ItemType.COIN, setup.Coins);
+        ItemManager.Instance.SetByType(ItemType.LIFE_PACK, setup.LifePacks);
+
+        // Respawn at checkpoint and set details
+        Player.Instance.Respawn();
+        Player.Instance.ClothChanger.SetTexture(setup.PlayerCurrentTexture);
+        if (setup.PlayerCurrentLife > 0f)
+            Player.Instance.Health.CurrentLife = setup.PlayerCurrentLife;
+
+        _loadingScreen.SetActive(false);
     }
 
     public void SaveAndQuit()

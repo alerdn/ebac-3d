@@ -6,6 +6,7 @@ public class GunBase : MonoBehaviour
 {
     public UIFillUpdater UiUpdater;
 
+    [SerializeField] private SFXType _sfxType;
     [SerializeField] protected ProjectileBase _prefabProjectileBase;
     [SerializeField] protected Transform _positionToShoot;
     [SerializeField] protected float _timeBetweenShoot = .3f;
@@ -18,6 +19,7 @@ public class GunBase : MonoBehaviour
     {
         StopShoot();
         _shootRoutine = StartCoroutine(ShootRoutine());
+        PlaySfx();
     }
 
     public void StopShoot()
@@ -43,5 +45,10 @@ public class GunBase : MonoBehaviour
         projectile.transform.position = _positionToShoot.position;
         projectile.transform.SetPositionAndRotation(_positionToShoot.position, _positionToShoot.rotation);
         projectile.Speed = _projectileSpeed;
+    }
+
+    private void PlaySfx()
+    {
+        SFXPool.Instance.Play(_sfxType);
     }
 }
